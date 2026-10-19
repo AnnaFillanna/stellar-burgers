@@ -17,7 +17,7 @@ export const OrderCardUI = memo(function OrderCardUI({
 }: OrderCardUIProps): React.JSX.Element {
   return (
     <Link
-      to={orderInfo.number.toString()}
+      to={`/feed/${orderInfo.number}`}
       relative="path"
       state={locationState}
       className={`p-6 mb-4 mr-2 ${styles.order}`}
