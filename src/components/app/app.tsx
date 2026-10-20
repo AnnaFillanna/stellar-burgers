@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from '../../services/store';
 import { Modal } from '../modal/modal';
 import { OrderInfo } from '../order-info/order-info';
 import { ProtectedRoute } from '../protected-route/protected-route';
+import { IngredientDetails } from '../ingredient-details/ingredient-details';
 
 import type { AppContentProps } from './type';
 import type { Location } from 'react-router-dom';
@@ -92,18 +93,24 @@ const RouteComponent = (): React.JSX.Element => {
     <>
       <Routes location={background ?? location}>
         <Route path="/" element={<ConstructorPage />} />
+        <Route element={<ProtectedRoute onlyUnAuth />}>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        </Route>
         <Route path="/feed" element={<Feed />} />
         <Route path="/feed/:number" element={<OrderInfo />} />
         <Route path="/order/:number" element={<OrderInfo />} />
+        <Route path="/ingredients/:id" element={<IngredientDetails />} />
+
         <Route element={<ProtectedRoute />}>
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/orders" element={<ProfileOrders />} />
+          <Route path="/profile/orders/:number" element={<OrderInfo />} />
         </Route>
       </Routes>
+
       {background && (
         <Routes>
           <Route
@@ -116,6 +123,33 @@ const RouteComponent = (): React.JSX.Element => {
                 title="Информация о заказе"
               >
                 <OrderInfo />
+              </Modal>
+            }
+          />
+
+          <Route
+            path="/profile/orders/:number"
+            element={
+              <Modal
+                onClose={() => {
+                  void navigate(-1);
+                }}
+                title="Информация о заказе"
+              >
+                <OrderInfo />
+              </Modal>
+            }
+          />
+          <Route
+            path="/ingredients/:id"
+            element={
+              <Modal
+                onClose={() => {
+                  void navigate(-1);
+                }}
+                title="Детали ингредиента"
+              >
+                <IngredientDetails />
               </Modal>
             }
           />

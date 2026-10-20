@@ -33,13 +33,20 @@ export const Profile = (): React.JSX.Element => {
     e.preventDefault();
 
     void dispatch(
-      updateUser({
-        name: formValue.name,
-        email: formValue.email,
-        ...(formValue.password && { password: formValue.password }),
-      })
-    );
-  };
+  updateUser({
+    name: formValue.name,
+    email: formValue.email,
+    ...(formValue.password && { password: formValue.password })
+  })
+).then((action) => {
+  if (updateUser.fulfilled.match(action)) {
+    setFormValue((prev) => ({
+      ...prev,
+      password: ''
+    }));
+  }
+});
+};
 
   const handleCancel = (e: SyntheticEvent): void => {
     e.preventDefault();
