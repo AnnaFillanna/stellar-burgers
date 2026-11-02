@@ -75,6 +75,7 @@ export default defineConfig({
   webServer: {
     command: 'npm run start',
     url: 'http://localhost:4000',
-    reuseExistingServer: !process.env.CI,
+    // Запускаем сервер этого проекта; занятый порт должен вызывать ошибку.
+    reuseExistingServer: false,
   }
 });
