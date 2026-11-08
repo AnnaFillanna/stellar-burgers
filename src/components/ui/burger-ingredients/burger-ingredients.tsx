@@ -25,31 +25,31 @@ export const BurgerIngredientsUI = memo(function BurgerIngredientsUI({
         <nav>
           <ul className={styles.menu}>
             <Tab value="bun" active={currentTab === 'bun'} onClick={onTabClick}>
-              Булки
+              Brötchen
             </Tab>
             <Tab value="main" active={currentTab === 'main'} onClick={onTabClick}>
-              Начинки
+              Beläge
             </Tab>
             <Tab value="sauce" active={currentTab === 'sauce'} onClick={onTabClick}>
-              Соусы
+              Soßen
             </Tab>
           </ul>
         </nav>
         <div className={styles.content}>
           <IngredientsCategory
-            title="Булки"
+            title="Brötchen"
             titleRef={titleBunRef}
             ingredients={buns}
             ref={bunsRef}
           />
           <IngredientsCategory
-            title="Начинки"
+            title="Beläge"
             titleRef={titleMainRef}
             ingredients={mains}
             ref={mainsRef}
           />
           <IngredientsCategory
-            title="Соусы"
+            title="Soßen"
             titleRef={titleSaucesRef}
             ingredients={sauces}
             ref={saucesRef}

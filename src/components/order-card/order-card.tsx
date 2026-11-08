@@ -3,6 +3,7 @@ import { memo, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { useSelector } from '../../services/store';
+import { getOrderName } from '../../utils/localization';
 
 import type { OrderCardProps } from './type';
 import type { TIngredient } from '@utils-types';
@@ -13,7 +14,6 @@ export const OrderCard = memo(function OrderCard({
 }: OrderCardProps): React.JSX.Element | null {
   const location = useLocation();
 
-  // TODO: Взять переменную из стора
   const ingredients = useSelector((state) => state.ingredients.items);
 
   const orderInfo = useMemo(() => {
@@ -40,6 +40,7 @@ export const OrderCard = memo(function OrderCard({
     const date = new Date(order.createdAt);
     return {
       ...order,
+      name: getOrderName(ingredientsInfo),
       ingredientsInfo,
       ingredientsToShow,
       remains,

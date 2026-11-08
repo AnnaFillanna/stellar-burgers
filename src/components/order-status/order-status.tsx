@@ -3,9 +3,9 @@ import { OrderStatusUI } from '@ui';
 import type { OrderStatusProps } from './type';
 
 const STATUS_TEXT: Record<string, string | undefined> = {
-  pending: 'Готовится',
-  done: 'Выполнен',
-  created: 'Создан',
+  pending: 'In Zubereitung',
+  done: 'Abgeschlossen',
+  created: 'Eingegangen',
 };
 
 const STATUS_COLOR: Record<string, string | undefined> = {
@@ -14,7 +14,7 @@ const STATUS_COLOR: Record<string, string | undefined> = {
   created: '#F2F2F3',
 };
 
-const UNKNOWN_STATUS_TEXT = 'Неизвестен';
+const UNKNOWN_STATUS_TEXT = 'Unbekannt';
 const UNKNOWN_STATUS_COLOR = '#F2F2F3';
 
 export const OrderStatus = ({ status }: OrderStatusProps): React.JSX.Element => (

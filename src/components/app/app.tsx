@@ -14,10 +14,10 @@ import { ResetPassword } from '../../pages/reset-password/reset-password';
 import { checkUserAuth } from '../../services/slices/authSlice';
 import { fetchIngredients } from '../../services/slices/ingredientsSlice';
 import { useDispatch, useSelector } from '../../services/store';
+import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { Modal } from '../modal/modal';
 import { OrderInfo } from '../order-info/order-info';
 import { ProtectedRoute } from '../protected-route/protected-route';
-import { IngredientDetails } from '../ingredient-details/ingredient-details';
 
 import type { AppContentProps } from './type';
 import type { Location } from 'react-router-dom';
@@ -55,8 +55,6 @@ const App = (): React.JSX.Element => {
 
 export default App;
 
-/* Маршруты показываются только когда ингредиенты загружены: без них не
-   отрисовать ни конструктор, ни состав заказа. */
 const AppContent = ({
   ingredients,
   isLoading,
@@ -69,7 +67,7 @@ const AppContent = ({
   if (error) {
     return (
       <p className={`${styles.message} text text_type_main-medium`}>
-        Не удалось загрузить ингредиенты
+        Die Zutaten konnten nicht geladen werden
         {error.message ? `: ${error.message}` : '.'}
       </p>
     );
@@ -77,7 +75,9 @@ const AppContent = ({
 
   if (!ingredients.length) {
     return (
-      <p className={`${styles.message} text text_type_main-medium`}>Нет ингредиентов</p>
+      <p className={`${styles.message} text text_type_main-medium`}>
+        Keine Zutaten verfügbar
+      </p>
     );
   }
 
@@ -94,10 +94,10 @@ const RouteComponent = (): React.JSX.Element => {
       <Routes location={background ?? location}>
         <Route path="/" element={<ConstructorPage />} />
         <Route element={<ProtectedRoute onlyUnAuth />}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
         </Route>
         <Route path="/feed" element={<Feed />} />
         <Route path="/feed/:number" element={<OrderInfo />} />
@@ -120,7 +120,7 @@ const RouteComponent = (): React.JSX.Element => {
                 onClose={() => {
                   void navigate(-1);
                 }}
-                title="Информация о заказе"
+                title="Bestelldetails"
               >
                 <OrderInfo />
               </Modal>
@@ -134,7 +134,7 @@ const RouteComponent = (): React.JSX.Element => {
                 onClose={() => {
                   void navigate(-1);
                 }}
-                title="Информация о заказе"
+                title="Bestelldetails"
               >
                 <OrderInfo />
               </Modal>
@@ -147,7 +147,7 @@ const RouteComponent = (): React.JSX.Element => {
                 onClose={() => {
                   void navigate(-1);
                 }}
-                title="Детали ингредиента"
+                title="Zutatendetails"
               >
                 <IngredientDetails />
               </Modal>

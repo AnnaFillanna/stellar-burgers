@@ -1,13 +1,23 @@
 import { test, expect } from '@playwright/test';
 
-test('должен открывать главную страницу', async ({ page }) => {
+test.beforeEach(async ({ page }) => {
+  await page.routeFromHAR('tests/hars/ingredients.har', {
+    url: '**/api/ingredients',
+    update: false,
+    notFound: 'abort',
+  });
+});
+
+test('öffnet die Startseite', async ({ page }) => {
   await page.goto('/');
 
   await expect(page).toHaveURL('http://localhost:4000/');
-  await expect(page.getByRole('heading', { name: 'Соберите бургер' })).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: 'Stelle deinen Burger zusammen' })
+  ).toBeVisible();
 });
 
-test('должен загружать моковые ингредиенты', async ({ page }) => {
+test('lädt Zutaten aus dem HAR-Archiv', async ({ page }) => {
   await page.routeFromHAR('tests/hars/ingredients.har', {
     url: '**/api/ingredients',
     update: false,
@@ -16,12 +26,12 @@ test('должен загружать моковые ингредиенты', as
 
   await page.goto('/');
 
-  await expect(page.getByText('Тестовая булочка')).toBeVisible();
+  await expect(page.getByText('Testbrötchen')).toBeVisible();
 
-  await expect(page.getByText('Тестовая котлета')).toBeVisible();
+  await expect(page.getByText('Testpatty')).toBeVisible();
 });
 
-test('должен добавлять булочку в конструктор', async ({ page }) => {
+test('fügt ein Brötchen zum Burger hinzu', async ({ page }) => {
   await page.routeFromHAR('tests/hars/ingredients.har', {
     url: '**/api/ingredients',
     update: false,
@@ -31,14 +41,14 @@ test('должен добавлять булочку в конструктор',
   await page.goto('/');
 
   const bunCard = page.locator('li').filter({
-    hasText: 'Тестовая булочка',
+    hasText: 'Testbrötchen',
   });
 
-  await bunCard.getByText('Добавить').click();
+  await bunCard.getByText('Hinzufügen').click();
 
-  await expect(page.getByText('Тестовая булочка')).toHaveCount(3);
+  await expect(page.getByText('Testbrötchen')).toHaveCount(3);
 });
-test('должен добавлять начинку в конструктор', async ({ page }) => {
+test('fügt einen Belag zum Burger hinzu', async ({ page }) => {
   await page.routeFromHAR('tests/hars/ingredients.har', {
     url: '**/api/ingredients',
     update: false,
@@ -48,14 +58,14 @@ test('должен добавлять начинку в конструктор',
   await page.goto('/');
 
   const cutletCard = page.locator('li').filter({
-    hasText: 'Тестовая котлета',
+    hasText: 'Testpatty',
   });
 
-  await cutletCard.getByText('Добавить').click();
+  await cutletCard.getByText('Hinzufügen').click();
 
-  await expect(page.getByText('Тестовая котлета')).toHaveCount(2);
+  await expect(page.getByText('Testpatty')).toHaveCount(2);
 });
-test('должен открывать и закрывать модальное окно ингредиента', async ({ page }) => {
+test('öffnet und schließt die Zutatendetails', async ({ page }) => {
   await page.routeFromHAR('tests/hars/ingredients.har', {
     url: '**/api/ingredients',
     update: false,
@@ -64,23 +74,18 @@ test('должен открывать и закрывать модальное �
 
   await page.goto('/');
 
-  // Открываем карточку булочки
-  await page.getByText('Тестовая булочка').click();
+  await page.getByText('Testbrötchen').click();
 
-  // Проверяем, что появилось модальное окно
-  await expect(page.getByRole('heading', { name: 'Детали ингредиента' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Zutatendetails' })).toBeVisible();
   await expect(
-    page.locator('#modals').getByText('Тестовая булочка', { exact: true })
+    page.locator('#modals').getByText('Testbrötchen', { exact: true })
   ).toBeVisible();
-  // Закрываем окно
-  await page.getByRole('button', { name: 'Закрыть' }).click();
 
-  // Проверяем, что окно исчезло
-  await expect(
-    page.getByRole('heading', { name: 'Детали ингредиента' })
-  ).not.toBeVisible();
+  await page.getByRole('button', { name: 'Schließen' }).click();
+
+  await expect(page.getByRole('heading', { name: 'Zutatendetails' })).not.toBeVisible();
 });
-test('должен закрывать модальное окно по overlay', async ({ page }) => {
+test('schließt den Dialog über den Hintergrund', async ({ page }) => {
   await page.routeFromHAR('tests/hars/ingredients.har', {
     url: '**/api/ingredients',
     update: false,
@@ -89,42 +94,41 @@ test('должен закрывать модальное окно по overlay',
 
   await page.goto('/');
 
-  // Открываем модальное окно
-  await page.getByText('Тестовая булочка').click();
+  await page.getByText('Testbrötchen').click();
 
-  // Проверяем, что окно открылось
-  await expect(page.getByRole('heading', { name: 'Детали ингредиента' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Zutatendetails' })).toBeVisible();
 
-  // Нажимаем на затемнённый фон
   await page.locator('[class*="overlay"]').click({
     position: { x: 5, y: 5 },
   });
 
-  // Проверяем, что окно закрылось
-  await expect(
-    page.getByRole('heading', { name: 'Детали ингредиента' })
-  ).not.toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Zutatendetails' })).not.toBeVisible();
 });
-test('должен оформлять заказ авторизованного пользователя', async ({ page }) => {
-  // Создаём тестовый токен авторизации
+test('bestellt als angemeldete Person', async ({ page, context }) => {
+  await context.addCookies([
+    {
+      name: 'accessToken',
+      value: 'test-access-token',
+      url: 'http://localhost:4000',
+    },
+  ]);
+
   await page.addInitScript(() => {
     localStorage.setItem('refreshToken', 'test-refresh-token');
   });
 
-  // Подменяем ответ сервера с данными пользователя
   await page.routeFromHAR('tests/hars/user.har', {
     url: '**/auth/user',
     update: false,
     notFound: 'abort',
   });
 
-  // Подменяем список ингредиентов
   await page.routeFromHAR('tests/hars/ingredients.har', {
     url: '**/api/ingredients',
     update: false,
     notFound: 'abort',
   });
-  // Подменяем ответ сервера при оформлении заказа
+
   await page.routeFromHAR('tests/hars/order.har', {
     url: '**/api/orders',
     update: false,
@@ -132,41 +136,40 @@ test('должен оформлять заказ авторизованного 
   });
   await page.goto('/');
 
-  // Проверяем, что ингредиенты загрузились
-  await expect(page.getByText('Тестовая булочка')).toBeVisible();
+  await expect(page.getByText('Testbrötchen')).toBeVisible();
 
-  // Проверяем, что ингредиенты загрузились
-  await expect(page.getByText('Тестовая булочка')).toBeVisible();
-  // Добавляем булочку
+  await expect(page.getByText('Testbrötchen')).toBeVisible();
+
   const bunCard = page.locator('li').filter({
-    hasText: 'Тестовая булочка',
+    hasText: 'Testbrötchen',
   });
 
-  await bunCard.getByText('Добавить').click();
+  await bunCard.getByText('Hinzufügen').click();
 
-  // Добавляем котлету
   const cutletCard = page.locator('li').filter({
-    hasText: 'Тестовая котлета',
+    hasText: 'Testpatty',
   });
-  // Добавляем котлету
-  await cutletCard.getByText('Добавить').click();
 
-  // Проверяем, что ингредиенты появились в конструкторе
-  await expect(page.getByText('Тестовая булочка')).toHaveCount(3);
-  await expect(page.getByText('Тестовая котлета')).toHaveCount(2);
+  await cutletCard.getByText('Hinzufügen').click();
 
-  // Оформляем заказ
-  await page.getByRole('button', { name: 'Оформить заказ' }).click();
-  // Проверяем номер оформленного заказа
+  await expect(page.getByText('Testbrötchen')).toHaveCount(3);
+  await expect(page.getByText('Testpatty')).toHaveCount(2);
+
+  const orderRequest = page.waitForRequest(
+    (request) => request.url().endsWith('/api/orders') && request.method() === 'POST'
+  );
+  await page.getByRole('button', { name: 'Jetzt bestellen' }).click();
+  expect((await orderRequest).headers().authorization).toBe('test-access-token');
+  expect(await page.evaluate(() => localStorage.getItem('refreshToken'))).toBe(
+    'test-refresh-token'
+  );
+
   await expect(page.getByRole('heading', { name: '12345' })).toBeVisible();
 
-  // Закрываем модальное окно заказа
-  await page.getByRole('button', { name: 'Закрыть' }).click();
+  await page.getByRole('button', { name: 'Schließen' }).click();
 
-  // Проверяем, что номер заказа исчез
   await expect(page.getByRole('heading', { name: '12345' })).not.toBeVisible();
 
-  // Проверяем, что конструктор очистился
-  await expect(page.getByText('Тестовая булочка')).toHaveCount(1);
-  await expect(page.getByText('Тестовая котлета')).toHaveCount(1);
+  await expect(page.getByText('Testbrötchen')).toHaveCount(1);
+  await expect(page.getByText('Testpatty')).toHaveCount(1);
 });

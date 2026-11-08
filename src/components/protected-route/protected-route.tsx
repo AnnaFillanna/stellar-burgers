@@ -12,15 +12,17 @@ export const ProtectedRoute = ({
   const isAuthChecked = useSelector((state) => state.auth.isAuthChecked);
   const location = useLocation();
   if (!isAuthChecked) {
-    return <div>Проверяем авторизацию...</div>;
+    return <div>Anmeldung wird geprüft …</div>;
   }
- if (onlyUnAuth) {
-  const from = location.state?.from;
+  if (onlyUnAuth) {
+    const from = (
+      location.state as {
+        from?: { pathname: string; search?: string; hash?: string };
+      } | null
+    )?.from;
 
-  return user
-    ? <Navigate to={from ?? '/'} replace />
-    : <Outlet />;
-}
+    return user ? <Navigate to={from ?? '/'} replace /> : <Outlet />;
+  }
   if (!user) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }

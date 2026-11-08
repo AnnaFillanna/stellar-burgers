@@ -13,8 +13,12 @@ export const FeedUI = memo(function FeedUI({
   return (
     <main className={styles.containerMain}>
       <div className={`${styles.titleBox} mt-10 mb-5`}>
-        <h1 className="text text_type_main-large">Лента заказов</h1>
-        <RefreshButton text="Обновить" onClick={handleGetFeeds} extraClass={'ml-30'} />
+        <h1 className="text text_type_main-large">Bestellübersicht</h1>
+        <RefreshButton
+          text="Aktualisieren"
+          onClick={handleGetFeeds}
+          extraClass={'ml-30'}
+        />
       </div>
       <div className={styles.main}>
         <div className={styles.columnOrders}>

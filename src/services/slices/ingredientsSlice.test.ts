@@ -1,37 +1,37 @@
-
 import ingredientsReducer from './ingredientsSlice';
+
 import type { TIngredient } from '../../utils/types';
 
 jest.mock('../../utils/burger-api', () => ({
-  getIngredientsApi: jest.fn()
+  getIngredientsApi: jest.fn(),
 }));
 
 describe('ingredientsSlice', () => {
-  test('должен возвращать начальное состояние', () => {
+  test('liefert den Ausgangszustand', () => {
     const state = ingredientsReducer(undefined, {
-      type: 'unknown'
+      type: 'unknown',
     });
 
     expect(state).toEqual({
       items: [],
       isLoading: false,
-      error: null
+      error: null,
     });
   });
 
-  test('должен включать загрузку при pending', () => {
+  test('aktiviert den Ladezustand bei pending', () => {
     const state = ingredientsReducer(undefined, {
-      type: 'ingredients/fetchIngredients/pending'
+      type: 'ingredients/fetchIngredients/pending',
     });
 
     expect(state.isLoading).toBe(true);
   });
 
-  test('должен сохранять ингредиенты при fulfilled', () => {
+  test('speichert Zutaten bei fulfilled', () => {
     const ingredients: TIngredient[] = [
       {
         _id: '123',
-        name: 'Тестовая булочка',
+        name: 'Testbrötchen',
         type: 'bun',
         proteins: 10,
         fat: 5,
@@ -40,13 +40,13 @@ describe('ingredientsSlice', () => {
         price: 100,
         image: 'test.png',
         image_mobile: 'test-mobile.png',
-        image_large: 'test-large.png'
-      }
+        image_large: 'test-large.png',
+      },
     ];
 
     const state = ingredientsReducer(undefined, {
       type: 'ingredients/fetchIngredients/fulfilled',
-      payload: ingredients
+      payload: ingredients,
     });
 
     expect(state.items).toEqual(ingredients);
@@ -54,15 +54,15 @@ describe('ingredientsSlice', () => {
     expect(state.error).toBe(null);
   });
 
-  test('должен сохранять ошибку при rejected', () => {
+  test('speichert Fehler bei rejected', () => {
     const state = ingredientsReducer(undefined, {
       type: 'ingredients/fetchIngredients/rejected',
       error: {
-        message: 'Ошибка загрузки ингредиентов'
-      }
+        message: 'Fehler beim Laden der Zutaten',
+      },
     });
 
     expect(state.isLoading).toBe(false);
-    expect(state.error).toBe('Ошибка загрузки ингредиентов');
+    expect(state.error).toBe('Fehler beim Laden der Zutaten');
   });
 });

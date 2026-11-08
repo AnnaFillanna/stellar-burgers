@@ -19,10 +19,12 @@ export const ResetPasswordUI = ({
 }: ResetPasswordUIProps): React.JSX.Element => (
   <main className={styles.container}>
     <div className={`pt-6 ${styles.wrapCenter}`}>
-      <h3 className="pb-6 text text_type_main-medium">Восстановление пароля</h3>
+      <h3 className="pb-6 text text_type_main-medium">Passwort zurücksetzen</h3>
       <form className={`pb-15 ${styles.form}`} name="login" onSubmit={handleSubmit}>
         <div className="pb-6">
           <PasswordInput
+            placeholder="Passwort"
+            errorText="Bitte ein gültiges Passwort eingeben (mindestens 6 Zeichen)."
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             name="password"
@@ -31,7 +33,7 @@ export const ResetPasswordUI = ({
         <div className="pb-6">
           <Input
             type="text"
-            placeholder="Введите код из письма"
+            placeholder="Code aus der E-Mail eingeben"
             onChange={(e) => setToken(e.target.value)}
             value={token}
             name="token"
@@ -42,7 +44,7 @@ export const ResetPasswordUI = ({
         </div>
         <div className={`pb-6 ${styles.button}`}>
           <Button type="primary" size="medium" htmlType="submit">
-            Сохранить
+            Speichern
           </Button>
         </div>
         {errorText && (
@@ -52,9 +54,9 @@ export const ResetPasswordUI = ({
         )}
       </form>
       <div className={`${styles.question} text text_type_main-default pb-6`}>
-        Вспомнили пароль?
+        Passwort wieder eingefallen?
         <Link to="/login" className={`pl-2 ${styles.link}`}>
-          Войти
+          Anmelden
         </Link>
       </div>
     </div>

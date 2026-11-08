@@ -30,7 +30,7 @@ export const DefaultIngredient: Story = {
   args: {
     ingredient: {
       _id: '111',
-      name: 'Булка',
+      name: 'Brötchen',
       type: 'top',
       proteins: 12,
       fat: 33,

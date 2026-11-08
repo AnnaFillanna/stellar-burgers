@@ -22,7 +22,7 @@ export const ProfileUI = ({
         <div className="pb-6">
           <Input
             type={'text'}
-            placeholder={'Имя'}
+            placeholder={'Name'}
             onChange={handleInputChange}
             value={formValue.name}
             name={'name'}
@@ -48,7 +48,7 @@ export const ProfileUI = ({
         <div className="pb-6">
           <Input
             type={'password'}
-            placeholder={'Пароль'}
+            placeholder={'Passwort'}
             onChange={handleInputChange}
             value={formValue.password}
             name={'password'}
@@ -66,10 +66,10 @@ export const ProfileUI = ({
               size="medium"
               onClick={handleCancel}
             >
-              Отменить
+              Abbrechen
             </Button>
             <Button type="primary" size="medium" htmlType="submit">
-              Сохранить
+              Speichern
             </Button>
           </div>
         )}

@@ -1,13 +1,13 @@
 import { BurgerConstructorUI } from '@ui';
 import { useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+
 import { createOrder, clearOrder } from '../../services/slices/orderSlice';
 import { useSelector, useDispatch } from '../../services/store';
 
 import type { TConstructorIngredient } from '@utils-types';
 
 export const BurgerConstructor = (): React.JSX.Element | null => {
-  /** TODO: Взять переменные constructorItems, orderRequest и orderModalData из стора */
   const constructorItems = useSelector((state) => state.burgerConstructor);
   const orderRequest = useSelector((state) => state.order.orderRequest);
   const orderModalData = useSelector((state) => state.order.orderModalData);
@@ -18,8 +18,8 @@ export const BurgerConstructor = (): React.JSX.Element | null => {
 
   const onOrderClick = (): void => {
     if (!constructorItems.bun || orderRequest) return;
-if (!user) {
-      navigate('/login', { state: { from: location } });
+    if (!user) {
+      void navigate('/login', { state: { from: location } });
       return;
     }
     const ingredients = [

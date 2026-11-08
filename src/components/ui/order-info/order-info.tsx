@@ -1,8 +1,5 @@
 import { OrderStatus } from '@components';
-import {
-  CurrencyIcon,
-  FormattedDate,
-} from '@krgaa/react-developer-burger-ui-components';
+import { CurrencyIcon } from '@krgaa/react-developer-burger-ui-components';
 import { memo } from 'react';
 
 import type { OrderInfoUIProps } from './type';
@@ -18,7 +15,7 @@ export const OrderInfoUI = memo(function OrderInfoUI({
         {orderInfo.name}
       </h3>
       <OrderStatus status={orderInfo.status} />
-      <p className={`text text_type_main-medium pt-15 pb=6`}>Состав:</p>
+      <p className={`text text_type_main-medium pt-15 pb=6`}>Zutaten:</p>
       <ul className={`${styles.list} mb-8`}>
         {Object.values(orderInfo.ingredientsInfo).map((item, index) => (
           <li className={`pb-4 pr-6 ${styles.item}`} key={index}>
@@ -39,7 +36,10 @@ export const OrderInfoUI = memo(function OrderInfoUI({
       </ul>
       <div className={styles.bottom}>
         <p className="text text_type_main-default text_color_inactive">
-          <FormattedDate date={orderInfo.date} />
+          {new Intl.DateTimeFormat('de-DE', {
+            dateStyle: 'medium',
+            timeStyle: 'short',
+          }).format(orderInfo.date)}
         </p>
         <span className={`text text_type_digits-default pr-4 ${styles.total}`}>
           {orderInfo.total}

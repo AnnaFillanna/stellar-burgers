@@ -81,7 +81,7 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message ?? 'Ошибка авторизации';
+        state.error = action.error.message ?? 'Die Anmeldung ist fehlgeschlagen';
       })
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
@@ -94,7 +94,7 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message ?? 'Ошибка регистрации';
+        state.error = action.error.message ?? 'Die Registrierung ist fehlgeschlagen';
       })
       .addCase(checkUserAuth.pending, (state) => {
         state.isAuthChecked = false;
@@ -117,7 +117,8 @@ const authSlice = createSlice({
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message ?? 'Ошибка обновления профиля';
+        state.error =
+          action.error.message ?? 'Das Profil konnte nicht aktualisiert werden';
       })
       .addCase(logoutUser.pending, (state) => {
         state.isLoading = true;
@@ -130,7 +131,7 @@ const authSlice = createSlice({
       })
       .addCase(logoutUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message ?? 'Ошибка выхода из аккаунта';
+        state.error = action.error.message ?? 'Die Abmeldung ist fehlgeschlagen';
       });
   },
 });

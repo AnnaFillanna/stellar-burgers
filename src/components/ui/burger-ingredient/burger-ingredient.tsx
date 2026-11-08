@@ -22,7 +22,7 @@ export const BurgerIngredientUI = memo(function BurgerIngredientUI({
     <li className={styles.container}>
       <Link className={styles.article} to={`/ingredients/${_id}`} state={locationState}>
         {count && <Counter count={count} />}
-        <img src={image} alt="картинка ингредиента." />
+        <img src={image} alt="Zutat" />
         <div className={`${styles.cost} mt-2 mb-2`}>
           <p className="text text_type_digits-default mr-2">{price}</p>
           <CurrencyIcon type="primary" />
@@ -30,7 +30,7 @@ export const BurgerIngredientUI = memo(function BurgerIngredientUI({
         <p className={`text text_type_main-default ${styles.text}`}>{name}</p>
       </Link>
       <AddButton
-        text="Добавить"
+        text="Hinzufügen"
         onClick={handleAdd}
         extraClass={`${styles.addButton} mt-8`}
       />

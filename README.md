@@ -1,38 +1,60 @@
-# Стартер на TypeScript для проекта Stellar Burger
+# Stellar Burgers
 
-## Процедура создания коммита с проверками
+Eine deutschsprachige React-Anwendung zum Zusammenstellen und Bestellen eines Weltraum-Burgers. Das Lern- und Portfolioprojekt zeigt die Arbeit mit TypeScript, Redux Toolkit, einer REST-API und automatisierten Tests.
 
-При создании коммита автоматически запускаются проверка линтерами `stylelint`, `eslint` и форматирование `prettier`.
+## Funktionen
 
-Если линтер обнаружит ошибки:
+- Zutaten nach Brötchen, Belägen und Soßen durchsuchen und Nährwerte im Dialog ansehen
+- Einen Burger zusammenstellen, Zutaten entfernen und ihre Reihenfolge ändern
+- Registrierung, Anmeldung, Profilbearbeitung und Passwort-Zurücksetzen
+- Bestellungen aufgeben sowie öffentliche und persönliche Bestellübersichten anzeigen
+- Deutsche Oberfläche, übersetzter Zutatenkatalog und Datumsformatierung mit `de-DE`
 
-- Коммит создан не будет
-- Необходимо исправить все выявленные проблемы
-- Добавить исправленные файлы в индекс: `git add .`
-- Повторить коммит
+## Technologie und Aufbau
 
-**Рекомендация:**  
-Для предотвращения ошибок на этапе коммита предварительно выполните:  
-`npm run lint`. Это позволит выявить и исправить проблемы до создания коммита.
+React 19, TypeScript, Redux Toolkit, React Router und Vite bilden die Anwendung. CSS Modules kapseln die Gestaltung; die UI-Komponenten stammen aus `@krgaa/react-developer-burger-ui-components`. Jest prüft die Redux-Logik, Playwright die wichtigsten Abläufe im Browser. Storybook enthält Komponentenbeispiele.
 
-Есть также команды для запуска проверок по отдельности:
-
-- `npm run eslint` - запускает проверку линтера и исправляет проблемы, которые можно исправить автоматически,
-- `npm run stylelint` - запускает проверку литера для файлов стилей и исправляет проблемы, которые можно исправить автоматически,
-- `npm run prettier` - исправляет ошибки форматирования кода.
-
-Можно добавить автозапуск этих команд при сохранении файла в вашей IDE.
-
-Для создания коммита рекомендуется запускать команду `npm run commit`. Она позволяет обеспечить соответствие описаний коммитов [общепринятым соглашениям](https://www.conventionalcommits.org/en/v1.0.0/).
-
-В проекте настроены алиасы, которые можно использовать при импорте модулей:
-
+```text
+src/components/       Anwendungs- und UI-Komponenten
+src/pages/            Seiten und Formulare
+src/services/         Redux-Store, Slices und Unit-Tests
+src/utils/            API, Typen, Cookies und Katalogübersetzung
+src/stories/          Storybook-Beispiele
+tests/                Playwright-Tests, HAR-Archive und Testdaten
 ```
-	alias: {
-		'@': path.resolve(__dirname, './src'),
-		'@components': path.resolve(__dirname, './src/components'),
-		'@services': path.resolve(__dirname, './src/utils'),
-		'@pages': path.resolve(__dirname, './src/pages'),
-		'@utils': path.resolve(__dirname, './src/utils'),
-	},
+
+## Lokal starten
+
+Voraussetzung: Node.js 22.12 oder neuer und npm.
+
+```bash
+npm ci
+cp .env.example .env
+npm run start
 ```
+
+Die Anwendung läuft unter http://localhost:4000. `VITE_BURGER_API_URL` konfiguriert die Lern-API; ohne Einstellung wird `https://norma.ffapi.ru/api` verwendet. Für die normale Nutzung ist eine Verbindung zur API erforderlich. Es handelt sich um ein Lernprojekt ohne echte Zahlungsabwicklung.
+
+```bash
+npm run build       # Produktionsbuild nach dist/
+npm run preview     # Produktionsbuild lokal ansehen
+npm run storybook   # Komponenten unter http://localhost:6006
+```
+
+## Qualitätssicherung
+
+```bash
+npm test -- --runInBand
+npx playwright install chromium
+npm run e2e
+npm run check
+npx tsc -b
+```
+
+Playwright startet den Entwicklungsserver selbst; Port 4000 muss frei sein. Die API-Antworten für die getesteten Abläufe kommen ausschließlich aus versionierten HAR-Dateien über `page.routeFromHAR` mit `notFound: 'abort'`. Es werden keine Antworten über `page.route` erzeugt. Die HAR-Archive enthalten ausschließlich synthetische Testdaten.
+
+Der Bestelltest setzt sowohl den `accessToken` als Cookie als auch den `refreshToken` in `localStorage`. Er prüft zusätzlich, dass der Zugriffstoken mit der Bestellung gesendet wird. Die Tests prüfen außerdem das Hinzufügen von Zutaten, Zutatendetails innerhalb des Dialogs, das Schließen von Dialogen und das Leeren des Burgers nach einer Bestellung.
+
+## Projektkontext
+
+Das Projekt basiert auf einer Lernvorlage für Stellar Burgers. Die deutsche Portfoliofassung ergänzt die Lokalisierung, eine nachvollziehbare Startanleitung und die Korrekturen aus dem Code-Review. Die Backend-API und die UI-Bibliothek sind externe Bestandteile. Vom Server gelieferte Zutaten werden beim Einlesen übersetzt; Bestelltitel entstehen aus den übersetzten Zutaten. Neu hinzukommende Katalognamen behalten bis zur Ergänzung der Übersetzung ihren Originalnamen.

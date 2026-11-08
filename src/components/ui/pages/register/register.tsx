@@ -21,13 +21,13 @@ export const RegisterUI = ({
 }: RegisterUIProps): React.JSX.Element => (
   <main className={styles.container}>
     <div className={`pt-6 ${styles.wrapCenter}`}>
-      <h3 className="pb-6 text text_type_main-medium">Регистрация</h3>
+      <h3 className="pb-6 text text_type_main-medium">Registrierung</h3>
       <form className={`pb-15 ${styles.form}`} name="register" onSubmit={handleSubmit}>
         <>
           <div className="pb-6">
             <Input
               type="text"
-              placeholder="Имя"
+              placeholder="Name"
               onChange={(e) => setUserName(e.target.value)}
               value={userName}
               name="name"
@@ -50,6 +50,8 @@ export const RegisterUI = ({
           </div>
           <div className="pb-6">
             <PasswordInput
+              placeholder="Passwort"
+              errorText="Bitte ein gültiges Passwort eingeben (mindestens 6 Zeichen)."
               onChange={(e) => setPassword(e.target.value)}
               value={password}
               name="password"
@@ -57,7 +59,7 @@ export const RegisterUI = ({
           </div>
           <div className={`pb-6 ${styles.button}`}>
             <Button type="primary" size="medium" htmlType="submit">
-              Зарегистрироваться
+              Registrieren
             </Button>
           </div>
           {errorText && (
@@ -68,9 +70,9 @@ export const RegisterUI = ({
         </>
       </form>
       <div className={`${styles.question} text text_type_main-default pb-6`}>
-        Уже зарегистрированы?
+        Bereits registriert?
         <Link to="/login" className={`pl-2 ${styles.link}`}>
-          Войти
+          Anmelden
         </Link>
       </div>
     </div>

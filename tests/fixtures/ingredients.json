@@ -4,7 +4,7 @@
   "data": [
     {
       "_id": "bun-123",
-      "name": "Тестовая булочка",
+      "name": "Testbrötchen",
       "type": "bun",
       "proteins": 10,
       "fat": 5,
@@ -17,7 +17,7 @@
     },
     {
       "_id": "main-456",
-      "name": "Тестовая котлета",
+      "name": "Testpatty",
       "type": "main",
       "proteins": 20,
       "fat": 15,

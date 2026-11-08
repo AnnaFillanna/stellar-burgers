@@ -1,8 +1,5 @@
 import { OrderStatus } from '@components';
-import {
-  CurrencyIcon,
-  FormattedDate,
-} from '@krgaa/react-developer-burger-ui-components';
+import { CurrencyIcon } from '@krgaa/react-developer-burger-ui-components';
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -31,7 +28,10 @@ export const OrderCardUI = memo(function OrderCardUI({
           #{String(orderInfo.number).padStart(6, '0')}
         </span>
         <span className="text text_type_main-default text_color_inactive">
-          <FormattedDate date={orderInfo.date} />
+          {new Intl.DateTimeFormat('de-DE', {
+            dateStyle: 'medium',
+            timeStyle: 'short',
+          }).format(orderInfo.date)}
         </span>
       </div>
       <h4 className={`pt-6 text text_type_main-medium ${styles.order_name}`}>

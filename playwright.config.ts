@@ -75,7 +75,7 @@ export default defineConfig({
   webServer: {
     command: 'npm run start',
     url: 'http://localhost:4000',
-    // Запускаем сервер этого проекта; занятый порт должен вызывать ошибку.
+    env: { VITE_BURGER_API_URL: 'https://norma.ffapi.ru/api' },
     reuseExistingServer: false,
-  }
+  },
 });

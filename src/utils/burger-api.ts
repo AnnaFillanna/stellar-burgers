@@ -1,8 +1,9 @@
 import { setCookie, getCookie } from './cookie';
+import { localizeIngredient } from './localization';
 
 import type { TIngredient, TOrder, TUser } from './types';
 
-const URL = String(import.meta.env.VITE_BURGER_API_URL);
+const URL = String(import.meta.env.VITE_BURGER_API_URL ?? 'https://norma.ffapi.ru/api');
 
 const checkResponse = <T>(res: Response): Promise<T> =>
   res.ok ? res.json() : res.json().then((err) => Promise.reject(toApiError(err)));
@@ -23,7 +24,7 @@ const toApiError = (payload: unknown): Error => {
     'message' in payload &&
     typeof (payload as { message: unknown }).message === 'string'
       ? (payload as { message: string }).message
-      : 'Не удалось выполнить запрос к серверу';
+      : 'Die Serveranfrage ist fehlgeschlagen';
 
   return new Error(message, { cause: payload });
 };
@@ -89,7 +90,7 @@ export const getIngredientsApi = (): Promise<TIngredient[]> =>
   fetch(`${URL}/ingredients`)
     .then((res) => checkResponse<TIngredientsResponse>(res))
     .then((data) => {
-      if (data?.success) return data.data;
+      if (data?.success) return data.data.map(localizeIngredient);
       return Promise.reject(toApiError(data));
     });
 

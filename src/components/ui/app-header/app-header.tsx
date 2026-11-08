@@ -22,7 +22,9 @@ export const AppHeaderUI = ({ userName }: TAppHeaderUIProps): React.JSX.Element 
           }
         >
           <BurgerIcon type="primary" />
-          <p className="text text_type_main-default ml-2 mr-10">Конструктор</p>
+          <p className="text text_type_main-default ml-2 mr-10">
+            Burger zusammenstellen
+          </p>
         </NavLink>
 
         <NavLink
@@ -32,7 +34,7 @@ export const AppHeaderUI = ({ userName }: TAppHeaderUIProps): React.JSX.Element 
           }
         >
           <ListIcon type="primary" />
-          <p className="text text_type_main-default ml-2">Лента заказов</p>
+          <p className="text text_type_main-default ml-2">Bestellübersicht</p>
         </NavLink>
       </div>
 
@@ -51,9 +53,7 @@ export const AppHeaderUI = ({ userName }: TAppHeaderUIProps): React.JSX.Element 
         }
       >
         <ProfileIcon type="primary" />
-        <p className="text text_type_main-default ml-2">
-          {userName ?? 'Личный кабинет'}
-        </p>
+        <p className="text text_type_main-default ml-2">{userName ?? 'Mein Konto'}</p>
       </NavLink>
     </nav>
   </header>

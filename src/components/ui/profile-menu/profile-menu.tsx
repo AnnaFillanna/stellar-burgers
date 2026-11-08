@@ -18,7 +18,7 @@ export const ProfileMenuUI = ({
       }
       end
     >
-      Профиль
+      Profil
     </NavLink>
     <NavLink
       to={'/profile/orders'}
@@ -28,18 +28,18 @@ export const ProfileMenuUI = ({
         } ${isActive ? styles.link_active : ''}`
       }
     >
-      История заказов
+      Meine Bestellungen
     </NavLink>
     <button
       className={`text text_type_main-medium text_color_inactive pt-4 pb-4 ${styles.button}`}
       onClick={handleLogout}
     >
-      Выход
+      Abmelden
     </button>
     <p className="pt-20 text text_type_main-default text_color_inactive">
       {pathname === '/profile'
-        ? 'В этом разделе вы можете изменить свои персональные данные'
-        : 'В этом разделе вы можете просмотреть свою историю заказов'}
+        ? 'Hier kannst du deine persönlichen Daten ändern'
+        : 'Hier findest du deine bisherigen Bestellungen'}
     </p>
   </>
 );

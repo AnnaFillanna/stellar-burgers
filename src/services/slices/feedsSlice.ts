@@ -40,7 +40,7 @@ const feedsSlice = createSlice({
       })
       .addCase(fetchFeeds.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message ?? 'Ошибка загрузки ленты';
+        state.error = action.error.message ?? 'Fehler beim Laden der Bestellübersicht';
       });
   },
 });

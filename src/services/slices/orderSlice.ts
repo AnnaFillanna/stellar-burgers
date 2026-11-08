@@ -45,7 +45,8 @@ const orderSlice = createSlice({
       })
       .addCase(createOrder.rejected, (state, action) => {
         state.orderRequest = false;
-        state.error = action.error.message ?? 'Ошибка оформления заказа';
+        state.error =
+          action.error.message ?? 'Die Bestellung konnte nicht aufgegeben werden';
       });
   },
 });

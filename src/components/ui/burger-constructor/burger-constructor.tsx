@@ -25,7 +25,7 @@ export const BurgerConstructorUI = ({
         <ConstructorElement
           type="top"
           isLocked
-          text={`${constructorItems.bun.name} (верх)`}
+          text={`${constructorItems.bun.name} (oben)`}
           price={constructorItems.bun.price}
           thumbnail={constructorItems.bun.image}
         />
@@ -34,7 +34,7 @@ export const BurgerConstructorUI = ({
       <div
         className={`${styles.noBuns} ${styles.noBunsTop} ml-8 mb-4 mr-5 text text_type_main-default`}
       >
-        Выберите булки
+        Brötchen auswählen
       </div>
     )}
     <ul className={styles.elements}>
@@ -51,7 +51,7 @@ export const BurgerConstructorUI = ({
         )
       ) : (
         <li className={`${styles.noBuns} ml-8 mb-4 mr-5 text text_type_main-default`}>
-          Выберите начинку
+          Belag auswählen
         </li>
       )}
     </ul>
@@ -60,7 +60,7 @@ export const BurgerConstructorUI = ({
         <ConstructorElement
           type="bottom"
           isLocked
-          text={`${constructorItems.bun.name} (низ)`}
+          text={`${constructorItems.bun.name} (unten)`}
           price={constructorItems.bun.price}
           thumbnail={constructorItems.bun.image}
         />
@@ -69,7 +69,7 @@ export const BurgerConstructorUI = ({
       <div
         className={`${styles.noBuns} ${styles.noBunsBottom} ml-8 mb-4 mr-5 text text_type_main-default`}
       >
-        Выберите булки
+        Brötchen auswählen
       </div>
     )}
     <div className={`${styles.total} mt-10 mr-4`}>
@@ -78,18 +78,21 @@ export const BurgerConstructorUI = ({
         <CurrencyIcon type="primary" />
       </div>
       <Button htmlType="button" type="primary" size="large" onClick={onOrderClick}>
-        Оформить заказ
+        Jetzt bestellen
       </Button>
     </div>
 
     {orderRequest && (
-      <Modal onClose={closeOrderModal} title={'Оформляем заказ...'}>
+      <Modal onClose={closeOrderModal} title={'Bestellung wird aufgegeben …'}>
         <Preloader />
       </Modal>
     )}
 
     {orderModalData && (
-      <Modal onClose={closeOrderModal} title={orderRequest ? 'Оформляем заказ...' : ''}>
+      <Modal
+        onClose={closeOrderModal}
+        title={orderRequest ? 'Bestellung wird aufgegeben …' : ''}
+      >
         <OrderDetailsUI orderNumber={orderModalData.number} />
       </Modal>
     )}

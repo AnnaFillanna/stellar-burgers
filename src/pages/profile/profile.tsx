@@ -5,7 +5,6 @@ import { updateUser } from '../../services/slices/authSlice';
 import { useSelector, useDispatch } from '../../services/store';
 
 export const Profile = (): React.JSX.Element => {
-  /** TODO: Взять переменную из стора */
   const user = useSelector((state) => state.auth.user);
 
   const dispatch = useDispatch();
@@ -33,20 +32,20 @@ export const Profile = (): React.JSX.Element => {
     e.preventDefault();
 
     void dispatch(
-  updateUser({
-    name: formValue.name,
-    email: formValue.email,
-    ...(formValue.password && { password: formValue.password })
-  })
-).then((action) => {
-  if (updateUser.fulfilled.match(action)) {
-    setFormValue((prev) => ({
-      ...prev,
-      password: ''
-    }));
-  }
-});
-};
+      updateUser({
+        name: formValue.name,
+        email: formValue.email,
+        ...(formValue.password && { password: formValue.password }),
+      })
+    ).then((action) => {
+      if (updateUser.fulfilled.match(action)) {
+        setFormValue((prev) => ({
+          ...prev,
+          password: '',
+        }));
+      }
+    });
+  };
 
   const handleCancel = (e: SyntheticEvent): void => {
     e.preventDefault();

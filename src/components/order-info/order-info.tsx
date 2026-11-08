@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import { fetchOrderByNumber } from '../../services/slices/orderInfoSlice';
 import { useDispatch, useSelector } from '../../services/store';
+import { getOrderName } from '../../utils/localization';
 
 import type { TIngredient } from '@utils-types';
 
@@ -20,7 +21,6 @@ export const OrderInfo = (): React.JSX.Element => {
     }
   }, [dispatch, number]);
 
-  /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
     if (!orderData || !ingredients.length) return null;
 
@@ -54,6 +54,7 @@ export const OrderInfo = (): React.JSX.Element => {
 
     return {
       ...orderData,
+      name: getOrderName(Object.values(ingredientsInfo)),
       ingredientsInfo,
       date,
       total,

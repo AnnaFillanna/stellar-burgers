@@ -10,7 +10,11 @@ export const Login = (): React.JSX.Element => {
 
   const dispatch = useDispatch();
   const location = useLocation();
-  const from = location.state?.from;
+  const from = (
+    location.state as {
+      from?: { pathname: string; search?: string; hash?: string };
+    } | null
+  )?.from;
   const error = useSelector((state) => state.auth.error);
 
   const handleSubmit = (e: SyntheticEvent): void => {

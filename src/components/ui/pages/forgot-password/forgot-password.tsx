@@ -13,12 +13,12 @@ export const ForgotPasswordUI = ({
 }: PageUIProps): React.JSX.Element => (
   <main className={styles.container}>
     <div className={`pt-6 ${styles.wrapCenter}`}>
-      <h3 className="pb-6 text text_type_main-medium">Восстановление пароля</h3>
+      <h3 className="pb-6 text text_type_main-medium">Passwort zurücksetzen</h3>
       <form className={`pb-15 ${styles.form}`} name="login" onSubmit={handleSubmit}>
         <div className="pb-6">
           <Input
             type="email"
-            placeholder="Укажите e-mail"
+            placeholder="E-Mail-Adresse eingeben"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
             name="email"
@@ -29,7 +29,7 @@ export const ForgotPasswordUI = ({
         </div>
         <div className={`pb-6 ${styles.button}`}>
           <Button type="primary" size="medium" htmlType="submit">
-            Восстановить
+            Zurücksetzen
           </Button>
         </div>
         {errorText && (
@@ -39,9 +39,9 @@ export const ForgotPasswordUI = ({
         )}
       </form>
       <div className={`${styles.question} text text_type_main-default pb-6`}>
-        Вспомнили пароль?
+        Passwort wieder eingefallen?
         <Link to={'/login'} className={`pl-2 ${styles.link}`}>
-          Войти
+          Anmelden
         </Link>
       </div>
     </div>
