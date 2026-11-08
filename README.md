@@ -1,6 +1,28 @@
-# Stellar Burgers
+# Stellar Burgers · Burger-Konfigurator
 
 Eine deutschsprachige React-Anwendung zum Zusammenstellen und Bestellen eines Weltraum-Burgers. Das Lern- und Portfolioprojekt zeigt die Arbeit mit TypeScript, Redux Toolkit, einer REST-API und automatisierten Tests.
+
+**React · TypeScript · Redux Toolkit · REST API · Jest · Playwright**
+
+![Deutscher Burger-Konfigurator mit Zutatenkatalog, ausgewähltem Burger und Gesamtpreis](docs/images/burger-konfigurator.png)
+
+*Zutaten auswählen, den Burger zusammenstellen und den Gesamtpreis direkt sehen.*
+
+## Einblick in die Anwendung
+
+Ein Klick auf eine Zutat öffnet ihre Detailansicht mit Bild und Nährwerten. Die Auswahl im Konfigurator bleibt dabei erhalten.
+
+![Zutatendetails mit deutschem Namen und Nährwertangaben](docs/images/zutatendetails.png)
+
+Die Screenshots zeigen die lokal gestartete Anwendung mit dem Zutatenkatalog der API. Eine öffentlich gehostete Demo ist derzeit nicht eingerichtet. Die Anleitung unten erklärt den lokalen Start.
+
+## Technische Schwerpunkte
+
+- **Zustandsverwaltung:** Redux-Slices für Zutaten, Burger-Konfiguration, Authentifizierung und Bestellungen
+- **API-Anbindung:** asynchrone Datenabfragen und Erneuerung abgelaufener Zugriffstoken
+- **Navigation:** geschützte Profilseiten und Detailansichten als Dialoge
+- **Tests:** Unit-Tests für Redux-Logik und Browser-Tests mit reproduzierbaren HAR-Antworten
+- **Lokalisierung:** deutsche Oberfläche, übersetzte Katalognamen und landesspezifische Datumsdarstellung
 
 ## Funktionen
 
